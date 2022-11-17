@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+
+{% block page_title %}Transaction history{% endblock %}
+
+{% block page_content %}
+    <br>
+    <h2>Search in transactions</h2>
+    <br>
+    <form method="get">
+        {% csrf_token %}
+        <div class="mb-3 row">
+            <div class="col-3">
+                <h4><label class="form-label">{{ historyFilter.form.id.label_tag }}</label></h4>
+                {{ historyFilter.form.id }}
+            </div>
+            <div class="col-3">
+                <h4><label class="form-label">{{ historyFilter.form.all_currencies.label_tag }}</label></h4>
+                {{ historyFilter.form.all_currencies }}
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-3">
+                <h4><label class="form-label">{{ historyFilter.form.buy_currency.label_tag }}</label></h4>
+                {{ historyFilter.form.buy_currency }}
+            
+                <div class="mt-2 row">
+                    <label class="form-label">{{ historyFilter.form.buy_currency_amount_from.label_tag }}</label>
+                    <div class="col-6">
+                        {{ historyFilter.form.buy_currency_amount_from }}
+                    </div>
+                    <div class="col-6">
+                        {{ historyFilter.form.buy_currency_amount_to }}
+                    </div> 
+                </div>
+            </div>
+            <div class="col-3">
+                <h4><label class="form-label">{{ historyFilter.form.sell_currency.label_tag }}</label></h4>
+                {{ historyFilter.form.sell_currency }}
+
+                <div class="mt-2 row">
+                    <label class="form-label">{{ historyFilter.form.sell_currency_amount_from.label_tag }}</label>
+                    <div class="col-6">
+                        {{ historyFilter.form.sell_currency_amount_from }}
+                    </div>
+                    <div class="col-6">
+                        {{ historyFilter.form.sell_currency_amount_to }}
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-3">
+                <h4><label class="form-label">{{ historyFilter.form.start_date.label_tag }}</label></h4>
+                <div class="row">
+                    <div class="col-6">
+                        {{ historyFilter.form.start_date }}
+                    </div>
+                    <div class="col-6">
+                        {{ historyFilter.form.end_date }}
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <hr>
+    <h2>Transactions</h2>
+    <br>
+    <form method="post" action="{% url 'delete_transaction_history' %}">
+        {% csrf_token %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Buy</th>
+                    <th scope="col">Buy Amount</th>
+                    <th scope="col">Sell</th>
+                    <th scope="col">Sell Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"><button class="btn btn-sm btn-danger" type="submit" onclick="return confirm_delete()">Delete</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for elem in history %}
+                    <tr>
+                        <th scope="row">{{ elem.id }}</th>
+                        <td>{{ elem.buy_currency }}</td>
+                        <td>{{ elem.buy_currency_amount }}</td>
+                        <td>{{ elem.sell_currency }}</td>
+                        <td>{{ elem.sell_currency_amount }}</td>
+                        <td>{{ elem.date }}</td>
+                        <td><input class="form-check-input" type="checkbox" value="{{ elem.id }}" name="transaction_check"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+{% endblock %}

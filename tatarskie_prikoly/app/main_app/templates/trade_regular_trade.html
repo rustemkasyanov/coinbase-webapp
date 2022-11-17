@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block page_title %}Regular trade{% endblock %}
+
+{% block page_content %}
+    <br>
+    <h2>Regular trade</h2>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-4">
+                <div class="mb-2">
+                    {{ form.buy_currency.label_tag }}
+                    {{ form.buy_currency }}
+                </div>
+                <div class="mb-2">    
+                    {{ form.buy_currency_amount.label_tag }}
+                    {{ form.buy_currency_amount }}
+                </div>
+                <div class="mb-2">
+                    {{ form.sell_currency.label_tag }}
+                    {{ form.sell_currency }}
+                    <button id="tradeform_check_balance" class="btn btn-primary btn-sm check-balance">Check balance</button>                    
+                </div>
+                <div class="mb-2">
+                    {{ form.sell_currency_amount.label_tag }}
+                    {{ form.sell_currency_amount }}                    
+                    Min amount: <span id="tradeform_sell_amount">0.00</span>
+                </div>
+                <div class="col-6">
+                    <input type="submit" value="Submit" class="btn btn-success form-control">
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

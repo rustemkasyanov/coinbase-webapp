@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+
+{% block page_title %}Main{% endblock %}
+
+{% block page_content %}
+    <br>
+    <div class="row mb-3 justify-content-between">
+        <div class="col-3">
+            <div id="clock"></div>
+        </div>
+        <div class="col-3">
+            <h1><b>{{ request.user }}</b>'s Dashboard</h1>
+        </div>
+    </div>
+    <h4>Most popular to buy: <i><b>{{ most_popular_buy.buy_currency }}</b></i></h4>
+    <h4>Most popular to sell: <i><b>{{ most_popular_sell.sell_currency }}</b></i></h4>
+    <h4>Last login: <i><b>{{ user_last_login }}</b></i></h4>
+    <hr>
+    <div class="row">
+        <h2 class="text-center">Last 5 Transactions</h2>
+        <br>
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Buy</th>
+                    <th scope="col">Buy Amount</th>
+                    <th scope="col">Sell</th>
+                    <th scope="col">Sell Amount</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for elem in last_transactions %}
+                    <tr>
+                        <th scope="row">{{ elem.id }}</th>
+                        <td>{{ elem.buy_currency }}</td>
+                        <td>{{ elem.buy_currency_amount }}</td>
+                        <td>{{ elem.sell_currency }}</td>
+                        <td>{{ elem.sell_currency_amount }}</td>
+                        <td>{{ elem.date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

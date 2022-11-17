@@ -1,0 +1,29 @@
+{% extends 'base/auth_base.html' %}
+
+{% block page_title %}Register{% endblock %}
+
+{% block page_content %}
+    <h2>Register</h2>
+    <br>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+        <div class="mb-3">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+        <input type="submit" value="Create User" class="btn btn-success">
+    </form>
+    Already have an account? <a href="{% url 'login' %}">Login</a>
+{% endblock %}

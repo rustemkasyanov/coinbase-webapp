@@ -1,0 +1,9 @@
+{% if ticker_currencies %}
+    <div class="ticker-wrap">
+        <div class="ticker">
+            {% for elem in ticker_currencies %}
+                <div class="ticker__item" id="price-{{ elem.currency }}">{{ elem.currency }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

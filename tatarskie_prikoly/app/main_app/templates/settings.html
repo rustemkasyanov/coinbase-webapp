@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block page_title %}Settings{% endblock %}
+
+{% block page_content %}
+    <br>
+    <h2>Ticker</h2>
+    <br>
+    <h4>Add new currency</h4>
+    <form method="post" action="{% url 'add_ticker' %}">
+        {% csrf_token %}
+        <div class="mb-3 row">
+            <div class="col-3">
+                <div class="input-group">
+                    <input type="submit" class="btn btn-success" value="Add">
+                    {{ ticker_form.currency }}
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if ticker_currency_arr %}
+        <h4>Current currencies:</h4>
+
+        <form method="post" action="{% url 'delete_ticker' %}">
+            {% csrf_token %}
+            <div class="mb-4 row row-cols-6">
+                {% for elem in ticker_currency_arr %}
+                    <div class="col-1">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label" for="ticker-currency-{{ elem.currency }}">{{ elem.currency }}</label>
+                            <input class="form-check-input" type="checkbox" id="ticker-currency-{{ elem.currency }}" value="{{ elem.id }}" name="ticker_check">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="btn btn-danger" type="submit" onclick="return confirm_delete()">Delete</button>
+        </form>
+    {% endif %}
+    <hr>
+{% endblock %}

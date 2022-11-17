@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app.kubernetes.io/name: myapp
+    app.kubernetes.io/component: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: myapp
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: myapp
+        app.kubernetes.io/component: web
+    spec:
+      containers:
+        - name: web
+          image:  neoner1576/web:v5
+          imagePullPolicy: IfNotPresent
+          command:
+            - python
+            - manage.py
+            - runserver
+            - 0.0.0.0:8000
+          ports:
+          - containerPort: 8000
+            name:  http
+          env:
+            - name: POSTGRES_USER
+              value: django
+
+            - name: POSTGRES_PASSWORD
+              value: django
+
+            - name: POSTGRES_HOST
+              value: pg
+            
+            - name: POSTGRES_DB
+              value: kubernetes_django
